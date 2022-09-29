@@ -1,0 +1,21 @@
+{
+    "LowerRateLimit":[0, 1, 0],
+    "UpperRateLimit":"",
+    "AtrialAmplitude":"",
+    "AtrialPulseWidth":"",
+    "VentricularAmplitude":"",
+    "VentricularPulseWidth":"",
+    "VRP":"",
+    "ARP":"",
+    "PVARP":"",
+    "PVARPExtension":"",
+    "Hysterisis":"",
+    "RateSmoothing":"",
+    "ATRDuration":"",
+    "ATRFallbackMode":"",
+    "ATRFallbackTime":"",
+    "ActivityThreshold":"",
+    "ResponseTime":"",
+    "ResponseFactor":"",
+    "RecoveryTime":""
+}
