@@ -1,7 +1,8 @@
+from doctest import master
 import json
 
 import tkinter as tk
-from tkinter import Button, ttk, messagebox
+from tkinter import Button, IntVar, ttk, messagebox
 from tkinter import font
 
 #for multilanguage support, https://pypi.org/project/translate/
@@ -15,8 +16,133 @@ def clearFrame(frame):
     except:
         print('**CLEARFRAME ERROR')
 
+def getParamVals(parameters):
+    for i in parameters:
+        p = parameters[i]
+        if p != None:
+            p["Values"] = p["Spinbox"].get()
+
 def mainPage():
     clearFrame(masterFrame)
+
+    with open("parameters.json", "r") as f:
+        print('opened file')
+        parameters = json.load(f)
+    #print(parameters)
+    row = 1
+    for i in parameters:
+        print(i)
+        p = parameters[i]
+        if p != None:
+            print(p)
+            p["Spinbox"] = ttk.Spinbox(masterFrame,
+                from_=p["Range"][0],
+                to=p["Range"][1],
+                increment=p["Inc"]
+                )
+            p["Spinbox"].insert(0, p["Default"])
+            p["Spinbox"].grid(row=row, column=1, padx=5, pady=5)
+            ttk.Label(masterFrame, text=i).grid(row=row, column=0, padx=5, pady=5)
+            row+=1
+    applyButton = ttk.Button(masterFrame, 
+        text="Apply",
+        command=lambda: [getParamVals(parameters)] #add close window etc
+        )
+    applyButton.grid(row=row, column=1, padx=5, pady=5)
+
+
+    
+    
+
+def mainPage2():
+    clearFrame(masterFrame)
+
+    LRLVal = 0 #loop this
+    LRL = ttk.Spinbox(masterFrame, 
+        from_ = 30, 
+        to=175, 
+        increment=5
+        )
+    LRL.insert(0, 120)
+    LRL.grid(row=1, column=1, padx=5, pady=6)
+
+    URLVal = 0
+    URL = ttk.Spinbox(masterFrame, 
+        from_=50,
+        to=175,
+        increment=5
+        )
+    URL.insert(0, 120)
+    URL.grid(row=2, column=1, padx=5, pady=6)
+
+    APAVal = 0
+    APA = ttk.Spinbox(masterFrame,
+        from_=0.5,
+        to=7.0,
+        increment=0.5
+        )
+    APA.insert(0, 3.5)
+    APA.grid(row=3, column=1, padx=5, pady=6)
+
+    APWVal = 0
+    APW = ttk.Spinbox(masterFrame, 
+        from_=0.1,
+        to=1.9,
+        increment=0.1
+        )
+    APW.insert(0, 0.4)
+    APW.grid(row=4, column=1, padx=5, pady=6)
+
+    VPAVal = 0
+    VPA = ttk.Spinbox(masterFrame,
+        from_=0.5,
+        to=7.0,
+        increment=0.5
+        )
+    VPA.insert(0, 3.5)
+    VPA.grid(row=5, column=1, padx=5, pady=6)
+
+    VPWVal = 0
+    VPW = ttk.Spinbox(masterFrame, 
+        from_=0.1,
+        to=1.9,
+        increment=0.1
+        )
+    VPW.insert(0, 0.4)
+    VPW.grid(row=6, column=1, padx=5, pady=6)
+
+    VRPVal = 0
+    VRP = ttk.Spinbox(masterFrame,
+        from_=150,
+        to=500,
+        increment=10
+        )
+    VRP.insert(0, 320)
+    VRP.grid(row=7, column=1, padx=5, pady=6)
+
+    ARPVal = 0
+    ARP = ttk.Spinbox(masterFrame,
+        from_=150,
+        to=500,
+        increment=10
+        )
+    ARP.insert(0, 250)
+    ARP.grid(row=8, column=1, padx=5, pady=6)
+
+    applyButton = ttk.Button(masterFrame, 
+        text="Apply",
+        command=lambda:[
+            LRLVal := LRL.get(), #loop this
+            URLVal := URL.get(),
+            APAVal := APA.get(),
+            APWVal := APW.get(),
+            VPAVal := VPA.get(),
+            VPWVal := VPW.get(),
+            VRPVal := VRP.get(),
+            ARPVal := ARP.get()
+        ]
+        )
+    applyButton.grid(row=9, column=1, padx=5, pady=6)
 
 def checkEmptyCredentials(username, password):
     if username == '' or password == '':
@@ -97,15 +223,13 @@ def maxUsersReached():
         row+=1
 
     buttonFrame = ttk.Frame(frame)
-
-    selected = selectedUser.get()
     
     deleteButton = ttk.Button(
         buttonFrame, 
         text="Delete", 
         command=lambda: [
-            print("Now deleting:"+selected+"**"), ##
-            deleteAccount(selected),
+            print("Now deleting:"+selectedUser.get()+"**"), ##
+            deleteAccount(selectedUser.get()),
             popup.destroy()
             ]
         )
@@ -203,10 +327,13 @@ def welcome():
     frame = ttk.Frame(masterFrame)
     frame.pack(padx=0, pady=0)
 
-    titleLabel = ttk.Label(frame, text="Welcome", font="Calibri 20")
-    welcomeButton = ttk.Button(frame, text="ok", command=lambda: loginPage())
-    titleLabel.pack()
+    titleLabel = ttk.Label(frame, text="Welcome", font="Calibri 25")
+    style.configure("enter.TButton", font=('Calibri', 12))
+    welcomeButton = ttk.Button(frame, style="welcome.TButton", text="Ok", command=lambda: loginPage())
+    titleLabel.pack(pady=(0, 5))
     welcomeButton.pack()
+
+    root.minsize(230, 70)
 
 def main():
     #instantiate global variables
@@ -224,7 +351,7 @@ def main():
     masterFrame = ttk.Frame(root)
     masterFrame.pack(padx=10, pady=10)
     welcome()
-    #loginPage()
+    #mainPage()
 
     root.mainloop()
 
