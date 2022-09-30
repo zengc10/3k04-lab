@@ -1,9 +1,7 @@
-from doctest import master
 import json
 
 import tkinter as tk
-from tkinter import Button, IntVar, ttk, messagebox
-from tkinter import font
+from tkinter import Button, IntVar, ttk, messagebox, font
 
 #for multilanguage support, https://pypi.org/project/translate/
 
@@ -15,6 +13,11 @@ def clearFrame(frame):
             i.destroy()
     except:
         print('**CLEARFRAME ERROR')
+
+
+def checkEmptyCredentials(username, password):
+    if username == '' or password == '':
+        return True
 
 def getParamVals(parameters):
     for i in parameters:
@@ -42,111 +45,13 @@ def mainPage():
                 )
             p["Spinbox"].insert(0, p["Default"])
             p["Spinbox"].grid(row=row, column=1, padx=5, pady=5)
-            ttk.Label(masterFrame, text=i).grid(row=row, column=0, padx=5, pady=5)
+            ttk.Label(masterFrame, text=p["Name"]).grid(row=row, column=0, padx=5, pady=5, sticky="w")
             row+=1
     applyButton = ttk.Button(masterFrame, 
         text="Apply",
         command=lambda: [getParamVals(parameters)] #add close window etc
         )
     applyButton.grid(row=row, column=1, padx=5, pady=5)
-
-
-    
-    
-
-def mainPage2():
-    clearFrame(masterFrame)
-
-    LRLVal = 0 #loop this
-    LRL = ttk.Spinbox(masterFrame, 
-        from_ = 30, 
-        to=175, 
-        increment=5
-        )
-    LRL.insert(0, 120)
-    LRL.grid(row=1, column=1, padx=5, pady=6)
-
-    URLVal = 0
-    URL = ttk.Spinbox(masterFrame, 
-        from_=50,
-        to=175,
-        increment=5
-        )
-    URL.insert(0, 120)
-    URL.grid(row=2, column=1, padx=5, pady=6)
-
-    APAVal = 0
-    APA = ttk.Spinbox(masterFrame,
-        from_=0.5,
-        to=7.0,
-        increment=0.5
-        )
-    APA.insert(0, 3.5)
-    APA.grid(row=3, column=1, padx=5, pady=6)
-
-    APWVal = 0
-    APW = ttk.Spinbox(masterFrame, 
-        from_=0.1,
-        to=1.9,
-        increment=0.1
-        )
-    APW.insert(0, 0.4)
-    APW.grid(row=4, column=1, padx=5, pady=6)
-
-    VPAVal = 0
-    VPA = ttk.Spinbox(masterFrame,
-        from_=0.5,
-        to=7.0,
-        increment=0.5
-        )
-    VPA.insert(0, 3.5)
-    VPA.grid(row=5, column=1, padx=5, pady=6)
-
-    VPWVal = 0
-    VPW = ttk.Spinbox(masterFrame, 
-        from_=0.1,
-        to=1.9,
-        increment=0.1
-        )
-    VPW.insert(0, 0.4)
-    VPW.grid(row=6, column=1, padx=5, pady=6)
-
-    VRPVal = 0
-    VRP = ttk.Spinbox(masterFrame,
-        from_=150,
-        to=500,
-        increment=10
-        )
-    VRP.insert(0, 320)
-    VRP.grid(row=7, column=1, padx=5, pady=6)
-
-    ARPVal = 0
-    ARP = ttk.Spinbox(masterFrame,
-        from_=150,
-        to=500,
-        increment=10
-        )
-    ARP.insert(0, 250)
-    ARP.grid(row=8, column=1, padx=5, pady=6)
-
-    applyButton = ttk.Button(masterFrame, 
-        text="Apply",
-        command=lambda:[
-            LRLVal := LRL.get(), #loop this
-            URLVal := URL.get(),
-            APAVal := APA.get(),
-            APWVal := APW.get(),
-            VPAVal := VPA.get(),
-            VPWVal := VPW.get(),
-            VRPVal := VRP.get(),
-            ARPVal := ARP.get()
-        ]
-        )
-    applyButton.grid(row=9, column=1, padx=5, pady=6)
-
-def checkEmptyCredentials(username, password):
-    if username == '' or password == '':
-        return True
 
 
 def deleteAccount(username):
