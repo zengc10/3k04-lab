@@ -1,32 +1,18 @@
+from cmath import exp
 import json
+from otherfuncs import *
 
-import tkinter as tk
-from tkinter import Button, IntVar, ttk, messagebox, font
+import tkinter
+from ttkthemes import themed_tk as tk
+from tkinter import Button, IntVar, ttk,messagebox, font
 
 #for multilanguage support, https://pypi.org/project/translate/
 
 #add confirmation message popup to "delete user" section
 
-def clearFrame(frame):
-    try:
-        for i in frame.winfo_children():
-            i.destroy()
-    except:
-        print('**CLEARFRAME ERROR')
-
-
-def checkEmptyCredentials(username, password):
-    if username == '' or password == '':
-        return True
-
-def getParamVals(parameters):
-    for i in parameters:
-        p = parameters[i]
-        if p != None:
-            p["Values"] = p["Spinbox"].get()
-
-def mainPage():
+def mainPage(): #use ttk notebook for part 2 of project
     clearFrame(masterFrame)
+    root.minsize(330, 320)
 
     with open("parameters.json", "r") as f:
         print('opened file')
@@ -34,10 +20,10 @@ def mainPage():
     #print(parameters)
     row = 1
     for i in parameters:
-        print(i)
+        #print(i)
         p = parameters[i]
         if p != None:
-            print(p)
+            #print(p)
             p["Spinbox"] = ttk.Spinbox(masterFrame,
                 from_=p["Range"][0],
                 to=p["Range"][1],
@@ -45,13 +31,17 @@ def mainPage():
                 )
             p["Spinbox"].insert(0, p["Default"])
             p["Spinbox"].grid(row=row, column=1, padx=5, pady=5)
-            ttk.Label(masterFrame, text=p["Name"]).grid(row=row, column=0, padx=5, pady=5, sticky="w")
+            ttk.Label(masterFrame, 
+                text=p["Name"], 
+                font=("Calibri, 10")
+                ).grid(row=row, column=0, padx=5, pady=5, sticky="w")
             row+=1
     applyButton = ttk.Button(masterFrame, 
         text="Apply",
-        command=lambda: [getParamVals(parameters)] #add close window etc
+        command=lambda: [
+            getParamVals(parameters)] #add close window etc
         )
-    applyButton.grid(row=row, column=1, padx=5, pady=5)
+    applyButton.grid(row=row, column=1, padx=5, pady=5, ipadx=10)
 
 
 def deleteAccount(username):
@@ -86,18 +76,19 @@ def newAccount(username, password):
     print('new user created:', username)  
 
 def maxUsersReached():
-    popup = tk.Tk()
+    popup = tk.ThemedTk()
+    popup.set_theme(theme)
     popup.title("Max Users Reached!")
     frame = ttk.Frame(popup)
-    frame.pack(padx=5, pady=5)
+    frame.pack(anchor='c', fill='both', expand=True)
     popup.minsize(250, 130)
 
     header = ttk.Label(
         frame, 
         text="Maximum Users Reached!", 
-        font="Calibri, 15"
+        font="Calibri, 16"
         )
-    header.grid(row = 0, column=0)
+    header.grid(row = 0, column=0, padx=5)
     subheader = ttk.Label(
         frame, 
         text="Select a user to delete",
@@ -105,7 +96,7 @@ def maxUsersReached():
     )
     subheader.grid(row=1, column=0)
 
-    selectedUser = tk.StringVar(frame)
+    selectedUser = tkinter.StringVar(frame)
     with open("userpass.json", "r") as f:
         data = json.load(f)
 
@@ -143,9 +134,9 @@ def maxUsersReached():
         text="Cancel",
         command=lambda: popup.destroy()
     )
-    buttonFrame.grid(column=0, row=3, pady=(5, 0))
-    deleteButton.grid(column=0, row=0)
-    cancelButton.grid(column=1, row=0)
+    buttonFrame.grid(column=0, row=3, pady=(2,5))
+    deleteButton.grid(column=0, row=0, padx=2, ipadx=7)
+    cancelButton.grid(column=1, row=0, padx=2, ipadx=7)
 
 
 def login(userEnter, passEnter):
@@ -163,6 +154,7 @@ def login(userEnter, passEnter):
             mainPage()
     if not userPassFound: 
         messagebox.askretrycancel("Login", "Login Unsuccessful.\nUsername or password not found.\nPlease Try Again.")
+
 
 def createNewUser(userEnter, passEnter):
     if checkEmptyCredentials(userEnter, passEnter):
@@ -184,7 +176,6 @@ def createNewUser(userEnter, passEnter):
             messagebox.showinfo("New User", "New User Added!")
 
     
-
 def loginPage():
     clearFrame(masterFrame)
     frame = ttk.Frame(masterFrame)
@@ -216,29 +207,32 @@ def loginPage():
         command= lambda: createNewUser(userBox.get(), passBox.get())
     )
     
-    titleLabel.grid(row=0, column=0)#pack(pady=8)
-    userLabel.grid(row=1, column=0, sticky='w')#pack()
-    userBox.grid(row=2, column=0, sticky='w', ipadx=50)#pack(pady=3)
-    passLabel.grid(row=3, column=0, sticky='w')#pack()
-    passBox.grid(row=4, column=0, sticky='w', ipadx=50)#pack(pady=3)
+    titleLabel.grid(row=0, column=0)
+    userLabel.grid(row=1, column=0, sticky='w')
+    userBox.grid(row=2, column=0, sticky='w', ipadx=50)
+    passLabel.grid(row=3, column=0, sticky='w')
+    passBox.grid(row=4, column=0, sticky='w', ipadx=50)
     
     buttonFrame.grid(row=5, column=0)
-    enter.grid(row=0, column=1, pady=(8, 0), padx=(3,0))#pack()
-    create.grid(row=0, column=0, pady=(8, 0), padx=(0,3))
+    enter.grid(row=0, column=1, pady=(8, 0), padx=(3,0), ipadx=10)
+    create.grid(row=0, column=0, pady=(8, 0), padx=(0,3), ipadx=10)
 
     root.minsize(300, 210)
 
-def welcome():
+def welcome(): 
     frame = ttk.Frame(masterFrame)
     frame.pack(padx=0, pady=0)
 
     titleLabel = ttk.Label(frame, text="Welcome", font="Calibri 25")
+    subtitleLabel = ttk.Label(frame, text="3K04 Pacemaker Project", font="Calibri 14")
     style.configure("enter.TButton", font=('Calibri', 12))
     welcomeButton = ttk.Button(frame, style="welcome.TButton", text="Ok", command=lambda: loginPage())
-    titleLabel.pack(pady=(0, 5))
-    welcomeButton.pack()
+    
+    titleLabel.pack()
+    subtitleLabel.pack(pady=(0, 5))
+    welcomeButton.pack(ipadx=20, pady=(0, 4))
 
-    root.minsize(230, 70)
+    root.minsize(230, 110)
 
 def main():
     #instantiate global variables
@@ -246,15 +240,18 @@ def main():
     global style
     global masterFrame
     global maxUsers
+    global theme
     maxUsers = 2
     #create tkinter window instance
-    root = tk.Tk()
+    theme = "scidblue"
+    root = tk.ThemedTk()
+    root.set_theme(theme) #breeze, #scidblue
     root.title("3K04 app")
     style = ttk.Style()
 
     #create frame to size the window
     masterFrame = ttk.Frame(root)
-    masterFrame.pack(padx=10, pady=10)
+    masterFrame.pack(fill='both', expand=True)
     welcome()
     #mainPage()
 
