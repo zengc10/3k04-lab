@@ -1,3 +1,4 @@
+from cProfile import label
 from cmath import exp
 import json
 from otherfuncs import *
@@ -10,10 +11,30 @@ from tkinter import Button, IntVar, ttk,messagebox, font
 
 #add confirmation message popup to "delete user" section
 
-def mainPage(): #use ttk notebook for part 2 of project
+def mainPage(): #use ttk notebook for part 2 of project and connected alert thing
     clearFrame(masterFrame)
     root.minsize(330, 320)
 
+    notebook = ttk.Notebook(masterFrame) #https://www.tutorialspoint.com/notebook-widget-in-tkinter
+    notebook.pack(expand=True, fill='both')
+
+    paramTab = ttk.Frame(notebook)
+    notebook.add(paramTab, text="Parameters")
+
+    mainTab = ttk.Frame(notebook)
+    notebook.add(mainTab, text="General")
+
+    connectButton = ttk.Button(
+        mainTab, 
+        text="Connect",
+        command=lambda:[
+            messagebox.showinfo("Connect", "Connection Successful"),
+            print("Connection Successful")
+        ]
+        )
+    connectButton.pack()
+    
+    #Parameters tab
     with open("parameters.json", "r") as f:
         print('opened file')
         parameters = json.load(f)
@@ -24,22 +45,24 @@ def mainPage(): #use ttk notebook for part 2 of project
         p = parameters[i]
         if p != None:
             #print(p)
-            p["Spinbox"] = ttk.Spinbox(masterFrame,
+            p["Spinbox"] = ttk.Spinbox(paramTab,
                 from_=p["Range"][0],
                 to=p["Range"][1],
                 increment=p["Inc"]
                 )
             p["Spinbox"].insert(0, p["Default"])
             p["Spinbox"].grid(row=row, column=1, padx=5, pady=5)
-            ttk.Label(masterFrame, 
+            ttk.Label(paramTab, 
                 text=p["Name"], 
                 font=("Calibri, 10")
                 ).grid(row=row, column=0, padx=5, pady=5, sticky="w")
             row+=1
-    applyButton = ttk.Button(masterFrame, 
+    applyButton = ttk.Button(paramTab, 
         text="Apply",
         command=lambda: [
-            getParamVals(parameters)] #add close window etc
+            getParamVals(parameters),
+            print("Parameters Applied")
+            ]
         )
     applyButton.grid(row=row, column=1, padx=5, pady=5, ipadx=10)
 

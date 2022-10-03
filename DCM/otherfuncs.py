@@ -16,7 +16,7 @@ def getParamVals(parameters):
         p = parameters[i]
         if p != None:
             cur = p["Spinbox"].get()
-            if int(cur) >= p["Range"][0] and int(cur) <= p["Range"][1]:
+            if float(cur) >= p["Range"][0] and float(cur) <= p["Range"][1]:
                 p["Values"] = p["Spinbox"].get()
             else:
                 messagebox.showwarning("Parameter Editor", "Invalid Value for {}".format(p["Name"]))
