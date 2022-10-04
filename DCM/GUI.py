@@ -1,5 +1,5 @@
 import json
-from otherfuncs import *
+from helpers import *
 
 import tkinter
 from ttkthemes import themed_tk as tk
