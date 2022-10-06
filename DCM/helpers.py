@@ -1,5 +1,14 @@
 from tkinter import messagebox
 
+def changeButton(button, style):
+    if button['text'] == "Connect":
+        button.configure(text="Disconnect")
+        style.configure('connectionImage.TFrame', background="green")
+    else:
+        button.configure(text="Connect")
+        style.configure('connectionImage.TFrame', background="red")
+    button.update()
+
 def clearFrame(frame): #clear all existing widgets from tkinter frame
     try:
         for i in frame.winfo_children(): #iterating through widgets

@@ -23,15 +23,34 @@ def mainPage():
     notebook.add(mainTab, text="General")
 
     #General tab widgets
+    statusFrame = ttk.Frame(mainTab)
+
+    connectionLabel = ttk.Label(statusFrame, text="Connection Status: ")
+
+
+    imageStyle = ttk.Style(mainTab)
+    imageStyle.configure('connectionImage.TFrame', background="red")
+
     connectButton = ttk.Button(
         mainTab, 
         text="Connect",
         command=lambda:[
-            messagebox.showinfo("Connect", "Connection Successful"),
-            print("Connection Successful")
+            messagebox.showinfo("Connect", "{}ion Successful".format(connectButton['text'])),
+            changeButton(connectButton, imageStyle),
+            print("(Dis)Connection Successful")
         ]
         )
-    connectButton.pack()
+    
+    connectionImage = ttk.Frame(
+        statusFrame, 
+        style="connectionImage.TFrame"
+        )
+    
+    statusFrame.grid(row=0, column=0)
+    connectionLabel.grid(row=0, column=0)
+    connectionImage.grid(row=0, column=1, ipadx=10, ipady=10)
+
+    connectButton.grid(row=1, column=0)
     
     #Parameters tab widgets
     with open("parameters.json", "r") as f: #getting parameter attributes from json file
