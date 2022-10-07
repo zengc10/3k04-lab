@@ -46,9 +46,9 @@ def mainPage():
         style="connectionImage.TFrame"
         )
     
-    statusFrame.grid(row=0, column=0)
+    statusFrame.grid(row=0, column=0, sticky='NESW')
     connectionLabel.grid(row=0, column=0)
-    connectionImage.grid(row=0, column=1, ipadx=10, ipady=10)
+    connectionImage.grid(row=0, column=1, ipadx=5, ipady=5, padx=3, pady=3)
 
     connectButton.grid(row=1, column=0)
     
@@ -69,7 +69,7 @@ def mainPage():
             p["Spinbox"].insert(0, p["Default"])
             p["Spinbox"].grid(row=row, column=1, padx=5, pady=5)
             ttk.Label(paramTab, #create label widget for spinbox
-                text=p["Name"], 
+                text="{} ({})".format(p["Name"], p["Units"]), 
                 font=("Calibri, 10")
                 ).grid(row=row, column=0, padx=5, pady=5, sticky="w")
             row+=1
