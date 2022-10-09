@@ -53,7 +53,7 @@ def mainPage():
     connectButton.grid(row=1, column=0)
     
     #Parameters tab widgets
-    with open("parameters.json", "r") as f: #getting parameter attributes from json file
+    with open(r"//data//parameters.json", "r") as f: #getting parameter attributes from json file
         print('opened file')
         parameters = json.load(f)
     
@@ -86,7 +86,7 @@ def mainPage():
 def deleteAccount(username):
     #note to self: require enter password for selected username
     print('entered delete account') ##
-    with open("userpass.json", "r") as f: #get usernames and passwords from json file
+    with open(r"//data//userpass.json", "r") as f: #get usernames and passwords from json file
         print('opened file')
         data = json.load(f)
     for index, object in enumerate(data): #iterating through login information
@@ -94,7 +94,7 @@ def deleteAccount(username):
             print('found') ##
             data.pop(index) #deleting specified login info
 
-    with open("userpass.json", "w") as f: 
+    with open(r"//data//userpass.json", "w") as f: 
         f.write(json.dumps(data, indent=2)) #updating json file
     
     if not username == '':
@@ -105,12 +105,12 @@ def deleteAccount(username):
 
 def newAccount(username, password):
     print('entered create account') ##
-    with open("userpass.json", "r") as f: #get existing login info from json file
+    with open(r"//data//userpass.json", "r") as f: #get existing login info from json file
         print('opened file') ##
         data = json.load(f)
     data.append({'username':username, 'password':password}) #adding new username and password
 
-    with open("userpass.json", "w") as f: 
+    with open(r"//data//userpass.json", "w") as f: 
         f.write(json.dumps(data, indent=2)) #updating json file
     print('new user created:', username)  ##
 
@@ -136,7 +136,7 @@ def maxUsersReached():
     subheader.grid(row=1, column=0)
 
     selectedUser = tkinter.StringVar(frame) #initializing selected user var
-    with open("userpass.json", "r") as f: #get login info from json file
+    with open(r"//data//userpass.json", "r") as f: #get login info from json file
         data = json.load(f)
 
     optionFrame = ttk.Frame(frame) #frame to contain account selection
@@ -186,7 +186,7 @@ def login(userEnter, passEnter): #login button command
         return 
     print('Success') ##
     userPassFound = False
-    with open("userpass.json", "r") as f:
+    with open(r"//data//userpass.json", "r") as f:
         data = json.load(f) #get login info from json file
     for i in data:
         if i['username'] == userEnter and i['password'] == passEnter: #search for matching username AND password
@@ -203,7 +203,7 @@ def createNewUser(userEnter, passEnter): #new user button command
         messagebox.showwarning("Login", "Enter a Username and Password.")
         return 
     UserAlreadyExists = False
-    with open("userpass.json", "r") as f:
+    with open(r"//data//userpass.json", "r") as f:
         data = json.load(f) #get login info from json file
     for i in data: #iterate through login info to check if user already exists
         if i['username'] == userEnter:
@@ -291,7 +291,7 @@ def main():
     root = tk.ThemedTk()
     root.set_theme(theme) #fitting themes: breeze, scidblue
     root.title("3K04 app")
-    root.iconbitmap("menghi.ico")
+    root.iconbitmap(r"//images//menghi.ico")
     style = ttk.Style()
 
     #create frame to size the window
