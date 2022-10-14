@@ -1,0 +1,23 @@
+AOO_data.o: \
+ C:/Users/12791/OneDrive/Documents/GitHub/3K04_group11/AOO_ert_rtw/AOO_data.c \
+ C:/Users/12791/OneDrive/Documents/GitHub/3K04_group11/AOO_ert_rtw/AOO.h \
+ C:/Users/12791/OneDrive/Documents/GitHub/3K04_group11/AOO_ert_rtw/rtwtypes.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2022a/toolbox/target/supportpackages/freedomk64f/include/MW_digitalIO.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2022a/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h \
+ C:/Users/12791/OneDrive/Documents/GitHub/3K04_group11/AOO_ert_rtw/rtwtypes.h \
+ C:/Users/12791/OneDrive/Documents/GitHub/3K04_group11/AOO_ert_rtw/AOO_types.h \
+ C:/ProgramData/MATLAB/SupportPackages/R2022a/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h
+
+C:/Users/12791/OneDrive/Documents/GitHub/3K04_group11/AOO_ert_rtw/AOO.h:
+
+C:/Users/12791/OneDrive/Documents/GitHub/3K04_group11/AOO_ert_rtw/rtwtypes.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2022a/toolbox/target/supportpackages/freedomk64f/include/MW_digitalIO.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2022a/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h:
+
+C:/Users/12791/OneDrive/Documents/GitHub/3K04_group11/AOO_ert_rtw/rtwtypes.h:
+
+C:/Users/12791/OneDrive/Documents/GitHub/3K04_group11/AOO_ert_rtw/AOO_types.h:
+
+C:/ProgramData/MATLAB/SupportPackages/R2022a/toolbox/target/supportpackages/freedomk64f/include/MW_SVD.h:
